@@ -21,6 +21,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../include/file.h"
+
+GameNode* createGameNode(char name[],int id, float price ){
+    GameNode* newNode = (GameNode*)malloc(sizeof(GameNode));
+
+    if(newNode ==NULL){
+        printf("fail memory allocation\n");
+        return NULL;
+    }
+
+    strcpy(newNode->data.gameName,name);
+    newNode->data.game_Id = id;
+    newNode->data.price = price;
+
+    newNode->next = NULL;
+
+    return newNode;
+}
 
 int main(){
     return 0;
