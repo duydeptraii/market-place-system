@@ -1,0 +1,38 @@
+Google C++ Style Guide (what it means)
+
+This is about how your code looks, not what it does.
+
+🧠 Main rules (simplified for you)
+✅ 1. Naming
+Variables → camelCase
+int gameId;
+float gamePrice;
+Functions → camelCase
+addGame()
+deleteGame()
+Struct → PascalCase
+typedef struct Game { ... } Game;
+✅ 2. Indentation
+2 or 4 spaces (be consistent)
+No messy spacing
+✅ 3. Braces style
+if (condition) {
+    // code
+}
+
+NOT:
+
+if(condition){
+code
+}
+✅ 4. Comments
+
+Explain:
+
+what function does
+not every line
+✅ 5. Line length
+Keep lines readable (not too long)
+✅ 6. Clean code
+meaningful variable names
+no random abbreviations
