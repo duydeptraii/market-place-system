@@ -23,7 +23,7 @@
 #include <string.h>
 #include "../include/file.h"
 
-GameNode* createGameNode(char name[],int id, float price ){
+GameNode* createGameNode(Game data){
     GameNode* newNode = (GameNode*)malloc(sizeof(GameNode));
 
     if(newNode ==NULL){
@@ -31,15 +31,44 @@ GameNode* createGameNode(char name[],int id, float price ){
         return NULL;
     }
 
-    strcpy(newNode->data.gameName,name);
-    newNode->data.game_Id = id;
-    newNode->data.price = price;
+    newNode->data = data;
 
     newNode->next = NULL;
 
     return newNode;
 }
 
-int main(){
+void insertGame(GameNode** head, Game data) {
+    GameNode* newNode = createGameNode(data);
+    if (newNode == NULL) return;
+    newNode->next = *head;
+    *head = newNode;
+}
+
+int deleteGame(GameNode** head, int gameId) {
+    GameNode* curr = *head;
+    GameNode* prev = NULL;
+    while (curr != NULL) {
+        if (curr->data.gameId == gameId) {
+            if (prev == NULL) *head = curr->next;
+            else              prev->next = curr->next;
+            free(curr);   // <-- Part 3 key requirement
+            printf("Game %d deleted.\n", gameId);
+            return 1;
+        }
+        prev = curr;
+        curr = curr->next;
+    }
+    printf("Game %d not found.\n", gameId);
     return 0;
+}
+
+void freeGameList(GameNode** head) {
+    GameNode* curr = *head;
+    while (curr != NULL) {
+        GameNode* temp = curr;
+        curr = curr->next;
+        free(temp);
+    }
+    *head = NULL;
 }

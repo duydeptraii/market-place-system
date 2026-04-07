@@ -9,13 +9,13 @@ THIS MODULE DEFINE ALL THE DATA STRUCTURE USED IN THE SYSTEM
 // This is data structure to store the data
 typedef struct {
     char gameName[100];
-    int game_Id;
+    int gameId;
     float price;
 } Game;
 
 typedef struct {
     char gameName[100];
-    int game_Id;
+    int gameId;
     float price;
 } Purchase;
 
