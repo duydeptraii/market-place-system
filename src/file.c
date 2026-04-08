@@ -86,3 +86,26 @@ void saveHistoryToFile(PurchaseQueue *q){
     fclose(f);
     printf("history saved successfully");
 }
+
+void loadHistoryFromFile(PurchaseQueue *q){
+    FILE *f = fopen("data/history.txt","r");
+    if (f==NULL){
+        printf("No existing history file\n");
+        return;
+    }
+
+    int id;
+    int price;
+    char name[100];
+
+    while (fscanf(f,"%d|%99[^|]%f\n", &id, name, &price) == 3) {
+        Purchase p;
+        p.gameId = id;
+        strcpy(p.gameName, name);
+        p.price = price;
+        enqueuePurchase(q,p);
+    }
+
+    fclose(f);
+    printf("history loaded succesfully");
+}
