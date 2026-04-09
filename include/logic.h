@@ -18,6 +18,42 @@
 #include "file.h"
 
 /* ==========================================================
+STRUCTS DEFINITION
+THIS MODULE DEFINE ALL THE DATA STRUCTURE USED IN THE SYSTEM
+========================================================== */
+
+// This is data structure to store the data
+typedef struct {
+    int game_Id;
+    char gameName[100];
+    float price;
+} Game;
+
+typedef struct {
+    char gameName[100];
+    int game_Id;
+    float price;
+} Purchase;
+
+
+// This is data structure to implement linked list and queue
+
+typedef struct GameNode{
+    Game data;
+    struct GameNode *next;
+} GameNode;
+
+typedef struct PurchaseNode{
+    Purchase data;
+    struct PurchaseNode *next;
+} PurchaseNode;
+typedef struct  {
+    PurchaseNode *front;
+    PurchaseNode *rear;
+} PurchaseQueue;
+
+
+/* ==========================================================
    QUEUE FUNCTION DECLARATIONS
    ========================================================== */
 
@@ -31,13 +67,14 @@ int isQueueEmpty(PurchaseQueue *q);
 void enqueuePurchase(PurchaseQueue *q, Purchase data);
 
 // Remove element from queue
-int dequeuePurchase(PurchaseQueue *q, Purchase *data);
+int dequeuePurchase(PurchaseQueue *q);
 
 // View front element without removing
-int peekQueue(PurchaseQueue *q, Purchase *data);
+int peekQueue(PurchaseQueue *q);
 
 // Display all queue elements
 void displayQueue(PurchaseQueue *q);
+
 
 /* ==========================================================
    LINKED LIST FUNCTIONS FOR GAME
@@ -50,15 +87,14 @@ void initGameList(GameNode **head);
 void insertGame(GameNode **head, Game data);
 
 // Delete a game by ID
-int deleteGame(GameNode **head, int gameId);
+int deleteGame(GameNode **head, int ID);
 
 // Search game by ID
-GameNode* searchGame(GameNode *head, int gameId);
+int searchGame(GameNode *head, int ID);
 
 // Display all games
 void displayGames(GameNode *head);
 
 // Free entire game list
 void freeGameList(GameNode **head);
-
 #endif
