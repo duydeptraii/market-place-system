@@ -24,7 +24,7 @@
 #include "../include/file.h"
 #include "../include/logic.h"
 
-saveGamesToFile(GameNode *head) {
+void saveGamesToFile(GameNode *head) {
     FILE *f = fopen("data/games.txt","w");
     if (f == NULL) {
         printf("Error: can't open games.txt for writing\n");
@@ -55,7 +55,7 @@ void loadGamesFromFile(GameNode **head) {
     float price;
     char name[100];
 
-    while (fscanf(f,"%d|%99[^|]%f\n", &id, name, &price) == 3) {
+    while (fscanf(f,"%d|%99[^|]|%f\n", &id, name, &price) == 3) {
         Game g;
         g.gameId =id;
         strcpy(g.gameName, name);
@@ -84,7 +84,7 @@ void saveHistoryToFile(PurchaseQueue *q){
     }
 
     fclose(f);
-    printf("history saved successfully");
+    printf("History saved successfully.\n");
 }
 
 void loadHistoryFromFile(PurchaseQueue *q){
@@ -95,10 +95,10 @@ void loadHistoryFromFile(PurchaseQueue *q){
     }
 
     int id;
-    int price;
+    float price;
     char name[100];
 
-    while (fscanf(f,"%d|%99[^|]%f\n", &id, name, &price) == 3) {
+    while (fscanf(f,"%d|%99[^|]|%f\n", &id, name, &price) == 3) {
         Purchase p;
         p.gameId = id;
         strcpy(p.gameName, name);
@@ -107,5 +107,5 @@ void loadHistoryFromFile(PurchaseQueue *q){
     }
 
     fclose(f);
-    printf("history loaded succesfully");
+    printf("History loaded successfully.\n");
 }
