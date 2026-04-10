@@ -15,8 +15,6 @@
 #ifndef LOGIC_H
 #define LOGIC_H
 
-#include "file.h"
-
 /* ==========================================================
 STRUCTS DEFINITION
 THIS MODULE DEFINE ALL THE DATA STRUCTURE USED IN THE SYSTEM
@@ -24,14 +22,14 @@ THIS MODULE DEFINE ALL THE DATA STRUCTURE USED IN THE SYSTEM
 
 // This is data structure to store the data
 typedef struct {
-    int game_Id;
+    int gameId;
     char gameName[100];
     float price;
 } Game;
 
 typedef struct {
     char gameName[100];
-    int game_Id;
+    int gameId;
     float price;
 } Purchase;
 
@@ -58,22 +56,22 @@ typedef struct  {
    ========================================================== */
 
 // Initialize queue
-void initQueue(PurchaseQueue *q);
+void initQueue(PurchaseQueue *queue);
 
 // Check if queue is empty
-int isQueueEmpty(PurchaseQueue *q);
+int isQueueEmpty(PurchaseQueue *queue);
 
 // Add element to queue
-void enqueuePurchase(PurchaseQueue *q, Purchase data);
+void enqueuePurchase(PurchaseQueue *queue, Purchase purchaseData);
 
 // Remove element from queue
-int dequeuePurchase(PurchaseQueue *q);
+int dequeuePurchase(PurchaseQueue *queue);
 
 // View front element without removing
-int peekQueue(PurchaseQueue *q);
+int peekQueue(PurchaseQueue *queue);
 
 // Display all queue elements
-void displayQueue(PurchaseQueue *q);
+void displayQueue(PurchaseQueue *queue);
 
 
 /* ==========================================================
@@ -84,13 +82,13 @@ void displayQueue(PurchaseQueue *q);
 void initGameList(GameNode **head);
 
 // Add a game to the list
-void insertGame(GameNode **head, Game data);
+void addGameList(GameNode **head, Game newGame);
 
 // Delete a game by ID
-int deleteGame(GameNode **head, int ID);
+int deleteGame(GameNode **head, int gameId);
 
 // Search game by ID
-int searchGame(GameNode *head, int ID);
+int searchGame(GameNode *head, int gameId);
 
 // Display all games
 void displayGames(GameNode *head);

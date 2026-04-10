@@ -24,31 +24,20 @@
 #include "../include/file.h"
 #include "../include/logic.h"
 
-void initQueue(PurchaseQueue *q) {
-    q->front = NULL;
-    q->rear = NULL;
-}
-
-int isQueueEmpty(PurchaseQueue *q){
-    if(q->rear ==NULL){
-        return 1;
-    } else{return 0;}
-}
-
-GameNode* createGameNode(Game data){
+GameNode* createGameNode(Game newGame) {
     GameNode* newNode = (GameNode*)malloc(sizeof(GameNode));
 
-    if(newNode ==NULL){
+    if (newNode == NULL) {
         printf("fail memory allocation\n");
         return NULL;
     }
 
-    newNode->data = data;
-
+    newNode->data = newGame;
     newNode->next = NULL;
 
     return newNode;
 }
+/*
 
 void insertGame(GameNode** head, Game data) {
     GameNode* newNode = createGameNode(data);
@@ -83,6 +72,17 @@ void freeGameList(GameNode** head) {
         free(temp);
     }
     *head = NULL;
+}
+
+void initQueue(PurchaseQueue *q) {
+    q->front = NULL;
+    q->rear = NULL;
+}
+
+int isQueueEmpty(PurchaseQueue *q){
+    if(q->rear ==NULL){
+        return 1;
+    } else{return 0;}
 }
 
 void enqueuePurchase(PurchaseQueue *q, Purchase data) {
@@ -167,4 +167,4 @@ void displayGames(GameNode *head) {
                curr->data.gameId, curr->data.gameName, curr->data.price);
         curr = curr->next;
     }
-}
+} */

@@ -1,71 +1,77 @@
-#include<math.h>
 #include <stdlib.h>
 #include <string.h>
-#include"logic.h"
+#include "../include/logic.h"
 #include <stdio.h>
-void initGameList(GameNode **head){
-    *head=NULL;
+
+void initGameList(GameNode **head) {
+    *head = NULL;
 }
-void addGameList(GameNode **head, Game data){
-    GameNode *temp=malloc(sizeof(GameNode));
-    temp->data=data;
-    temp->next=*head;
-    *head=temp;
+
+void addGameList(GameNode **head, Game newGame) {
+    GameNode *newNode = malloc(sizeof(GameNode));
+    newNode->data = newGame;
+    newNode->next = *head;
+    *head = newNode;
 }
-int deleteGame(GameNode **head, int ID){
-    GameNode *temp=*head;
-    if (temp != NULL && temp->data.game_Id==ID){
-        *head=temp->next;
-        free(temp);
+
+int deleteGame(GameNode **head, int gameId) {
+    GameNode *currentNode = *head;
+    
+    if (currentNode != NULL && currentNode->data.gameId == gameId) {
+        *head = currentNode->next;
+        free(currentNode);
         return 1;
     }
-    GameNode *prvtemp=temp;
-    temp=temp->next;
+    if (currentNode == NULL) {
+        printf("Can't find ID: %d\n", gameId);
+        return 0;
+    }
 
-    while (temp != NULL){
-        if (temp->data.game_Id == ID){
+    GameNode *previousNode = currentNode;
+    currentNode = currentNode->next;
 
-            prvtemp->next=temp->next;
-            free(temp);
+    while (currentNode != NULL) {
+        if (currentNode->data.gameId == gameId) {
+            previousNode->next = currentNode->next;
+            free(currentNode);
             return 1;
         }
-        prvtemp=temp;
-        temp=temp->next;
-
+        previousNode = currentNode;
+        currentNode = currentNode->next;
     }
-    printf("Can't find ID: %d\n",ID);
-    free(temp);
+    printf("Can't find ID: %d\n", gameId);
     return 0;
 }
-int searchGame(GameNode *head, int ID){
-    GameNode *temp=head;
-    while (temp != NULL){
-    if (temp->data.game_Id == ID ){
-        printf("GameID: %d, Name: %s, Price: %f\n",temp->data.game_Id,temp->data.gameName,temp->data.price);
-        return 1;
+
+int searchGame(GameNode *head, int gameId) {
+    GameNode *currentNode = head;
+    while (currentNode != NULL) {
+        if (currentNode->data.gameId == gameId) {
+            printf("GameID: %d, Name: %s, Price: %f\n", currentNode->data.gameId, currentNode->data.gameName, currentNode->data.price);
+            return 1;
         }
-    temp=temp->next;
+        currentNode = currentNode->next;
     }
-    printf("Can't find ID: %d\n",ID);
+    printf("Can't find ID: %d\n", gameId);
     return 0;
 }
 
 void displayGames(GameNode *head) {
-    GameNode *temp = head;
-    while (temp != NULL) {
+    GameNode *currentNode = head;
+    while (currentNode != NULL) {
         printf("GameID: %d, Name: %s, Price: %.2f\n",
-               temp->data.game_Id,
-               temp->data.gameName,
-               temp->data.price);
-        temp = temp->next;
+               currentNode->data.gameId,
+               currentNode->data.gameName,
+               currentNode->data.price);
+        currentNode = currentNode->next;
     }
 }
 
-void freeGameList(GameNode **head){
-    GameNode *temp;
-    while (*head != NULL){
-        temp=*head;
-        *head=temp->next;
-        free(temp);
+void freeGameList(GameNode **head) {
+    GameNode *currentNode;
+    while (*head != NULL) {
+        currentNode = *head;
+        *head = currentNode->next;
+        free(currentNode);
     }
 }

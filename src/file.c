@@ -1,5 +1,4 @@
 /*
- * file.c
  *
  * Description:
  * This file handles all file input and output operations for the system.
@@ -25,87 +24,87 @@
 #include "../include/logic.h"
 
 void saveGamesToFile(GameNode *head) {
-    FILE *f = fopen("data/games.txt","w");
-    if (f == NULL) {
+    FILE *filePtr = fopen("data/games.txt", "w");
+    if (filePtr == NULL) {
         printf("Error: can't open games.txt for writing\n");
         return;
     }
 
-    GameNode *curr = head;
-    while (curr != NULL){
-        fprintf(f,"%d|%s|%.2f\n",
-        curr->data.gameId,
-        curr->data.gameName,
-        curr->data.price);
-    curr = curr->next;
+    GameNode *currentNode = head;
+    while (currentNode != NULL) {
+        fprintf(filePtr, "%d|%s|%.2f\n",
+                currentNode->data.gameId,
+                currentNode->data.gameName,
+                currentNode->data.price);
+        currentNode = currentNode->next;
     }
 
-    fclose(f);
+    fclose(filePtr);
     printf("Games saved successfully. \n");
 }
 
 void loadGamesFromFile(GameNode **head) {
-    FILE *f = fopen("data/games.txt", "r");
-    if (f == NULL){
+    FILE *filePtr = fopen("data/games.txt", "r");
+    if (filePtr == NULL) {
         printf("no existing game file \n");
         return;
     }
 
-    int id;
-    float price;
-    char name[100];
+    int gameId;
+    float gamePrice;
+    char gameName[100];
 
-    while (fscanf(f,"%d|%99[^|]|%f\n", &id, name, &price) == 3) {
-        Game g;
-        g.gameId =id;
-        strcpy(g.gameName, name);
-        g.price = price;
-        insertGame(head,g);
+    while (fscanf(filePtr, "%d|%99[^|]|%f\n", &gameId, gameName, &gamePrice) == 3) {
+        Game newGame;
+        newGame.gameId = gameId;
+        strcpy(newGame.gameName, gameName);
+        newGame.price = gamePrice;
+        addGameList(head, newGame);
     }
 
-    fclose(f);
+    fclose(filePtr);
     printf("games loaded successfully.\n");
 }
 
-void saveHistoryToFile(PurchaseQueue *q){
-    FILE *f = fopen("data/history.txt", "w");
-    if(f == NULL){
+void saveHistoryToFile(PurchaseQueue *queue) {
+    FILE *filePtr = fopen("data/history.txt", "w");
+    if (filePtr == NULL) {
         printf("error: cannot open history.txt for writing\n");
         return;
     }
 
-    PurchaseNode  *curr = q->front;
-    while(curr!=NULL){
-        fprintf(f, "%d|%s|%.2f\n",
-                curr->data.gameId,
-                curr->data.gameName,
-                curr->data.price);
-        curr = curr->next;
+    PurchaseNode *currentNode = queue->front;
+    while (currentNode != NULL) {
+        fprintf(filePtr, "%d|%s|%.2f\n",
+                currentNode->data.gameId,
+                currentNode->data.gameName,
+                currentNode->data.price);
+        currentNode = currentNode->next;
     }
 
-    fclose(f);
+    fclose(filePtr);
     printf("History saved successfully.\n");
 }
 
-void loadHistoryFromFile(PurchaseQueue *q){
-    FILE *f = fopen("data/history.txt","r");
-    if (f==NULL){
+void loadHistoryFromFile(PurchaseQueue *queue) {
+    FILE *filePtr = fopen("data/history.txt", "r");
+    if (filePtr == NULL) {
         printf("No existing history file\n");
         return;
     }
 
-    int id;
-    float price;
-    char name[100];
+    int gameId;
+    float gamePrice;
+    char gameName[100];
 
-    while (fscanf(f,"%d|%99[^|]|%f\n", &id, name, &price) == 3) {
-        Purchase p;
-        p.gameId = id;
-        strcpy(p.gameName, name);
-        p.price = price;
-        enqueuePurchase(q,p);
+    while (fscanf(filePtr, "%d|%99[^|]|%f\n", &gameId, gameName, &gamePrice) == 3) {
+        Purchase newPurchase;
+        newPurchase.gameId = gameId;
+        strcpy(newPurchase.gameName, gameName);
+        newPurchase.price = gamePrice;
+        enqueuePurchase(queue, newPurchase);
     }
 
-    fclose(f);
+    fclose(filePtr);
     printf("History loaded successfully.\n");
 }

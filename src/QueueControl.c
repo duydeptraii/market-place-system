@@ -1,58 +1,64 @@
-#include<math.h>
 #include <stdlib.h>
 #include <string.h>
-#include"logic.h"
 #include <stdio.h>
+#include "../include/logic.h"
 
-
-void initQueue(PurchaseQueue *q){
-        q->front=NULL;
-        q->rear=NULL;
-
+void initQueue(PurchaseQueue *queue) {
+    queue->front = NULL;
+    queue->rear = NULL;
 }
-int isQueueEmpty(PurchaseQueue *q){
-    if(q->front==NULL){
-        return 1;
-    }
-    return 0;
-    }
-void enqueuePurchase(PurchaseQueue *q, Purchase data){
-    PurchaseNode *newnode=malloc(sizeof(PurchaseNode));
-    newnode->data=data;
-    newnode->next=NULL;
 
-    if(q->rear==NULL){
-        q->front=newnode;
-        q->rear=newnode;
-    }
-    else{
-        q->rear->next=newnode;
-        q->rear=newnode;
+int isQueueEmpty(PurchaseQueue *queue) {
+    return queue->front == NULL;
+}
+
+void enqueuePurchase(PurchaseQueue *queue, Purchase purchaseData) {
+    PurchaseNode *newNode = malloc(sizeof(PurchaseNode));
+    newNode->data = purchaseData;
+    newNode->next = NULL;
+
+    if (queue->rear == NULL) {
+        queue->front = newNode;
+        queue->rear = newNode;
+    } else {
+        queue->rear->next = newNode;
+        queue->rear = newNode;
     }
 }
-int dequeuePurchase(PurchaseQueue *q){
-    if (q->front==NULL) return 0;
-    PurchaseNode *temp=q->front;
-    q->front=q->front->next;
-    if(q->front==NULL){
-        q->rear=NULL;
+
+int dequeuePurchase(PurchaseQueue *queue) {
+    if (isQueueEmpty(queue)) return 0;
+
+    PurchaseNode *tempNode = queue->front;
+    queue->front = queue->front->next;
+
+    if (queue->front == NULL) {
+        queue->rear = NULL;
     }
-    free(temp);
+
+    free(tempNode);
     return 1;
 }
-int peekQueue(PurchaseQueue *q){
-    if (q->front==NULL){
+
+int peekQueue(PurchaseQueue *queue) {
+    if (isQueueEmpty(queue)) {
         printf("There is no game in the list.\n");
         return 0;
     }
-    PurchaseNode *temp=q->front;
-    printf("GameID: %d, Name: %s, Price: %f\n",temp->data.game_Id,temp->data.gameName,temp->data.price);
+    PurchaseNode *tempNode = queue->front;
+    printf("ID: %d | Name: %s | Price: $%.2f\n", tempNode->data.gameId, tempNode->data.gameName, tempNode->data.price);
     return 1;
 }
-void displayQueue(PurchaseQueue*q){
-    PurchaseNode *temp=q->front;
-    while (temp != NULL){
-        printf("GameID: %d, Name: %s, Price: %f\n",temp->data.game_Id,temp->data.gameName,temp->data.price);
-        temp=temp->next;
+
+void displayQueue(PurchaseQueue *queue) {
+    if (isQueueEmpty(queue)) {
+        printf("Purchase history is empty.\n");
+        return;
+    }
+    PurchaseNode *tempNode = queue->front;
+    printf("\n--- Purchase History ---\n");
+    while (tempNode != NULL) {
+        printf("ID: %d | Name: %s | Price: $%.2f\n", tempNode->data.gameId, tempNode->data.gameName, tempNode->data.price);
+        tempNode = tempNode->next;
     }
 }

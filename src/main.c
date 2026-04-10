@@ -22,12 +22,12 @@
 
 int main(){
     GameNode *head = NULL;
-    PurchaseQueue q;
-    initQueue(&q);
+    PurchaseQueue purchaseQueue;
+    initQueue(&purchaseQueue);
 
     // 1. Load data from files at startup
     loadGamesFromFile(&head);
-    loadHistoryFromFile(&q);
+    loadHistoryFromFile(&purchaseQueue);
 
     int choice;
     do {
@@ -44,52 +44,63 @@ int main(){
         printf("Enter your choice: ");
         
         if (scanf("%d", &choice) != 1) {
-            while (getchar() != '\n'); // Clear invalid text input
+            int inputChar;
+            while ((inputChar = getchar()) != '\n' && inputChar != EOF); // Clear invalid text input
+            if (inputChar == EOF) {
+                break; // Exit gracefully if End-Of-File is encountered
+            }
             continue;
         }
 
         // 3. Handle user actions
         if (choice == 1) {
-            Game g;
+            Game newGame;
             printf("Enter Game ID: ");
-            scanf("%d", &g.gameId);
+            scanf("%d", &newGame.gameId);
             printf("Enter Game Name: ");
-            scanf(" %99[^\n]", g.gameName); // Reads a string with spaces
+            scanf(" %99[^\n]", newGame.gameName); // Reads a string with spaces
             printf("Enter Game Price: ");
-            scanf("%f", &g.price);
-            insertGame(&head, g);
+            scanf("%f", &newGame.price);
+            addGameList(&head, newGame);
             printf("Game added successfully!\n");
         } else if (choice == 2) {
-            int id;
+            int deleteId;
             printf("Enter Game ID to delete: ");
-            scanf("%d", &id);
-            deleteGame(&head, id);
+            scanf("%d", &deleteId);
+            deleteGame(&head, deleteId);
         } else if (choice == 3) {
             displayGames(head);
         } else if (choice == 4) {
-            int id;
+            int searchId;
             printf("Enter Game ID to buy: ");
-            scanf("%d", &id);
-            GameNode *found = searchGame(head, id);
+            scanf("%d", &searchId);
+            int isFound = searchGame(head, searchId);
             
-            if (found != NULL) {
-                Purchase p;
-                p.gameId = found->data.gameId;
-                strcpy(p.gameName, found->data.gameName);
-                p.price = found->data.price;
-                enqueuePurchase(&q, p);
-                printf("Successfully purchased: %s\n", p.gameName);
+            if (isFound) {
+                GameNode *currentNode = head;
+                // Retrieve the node manually since searchGame only returns 1 or 0
+                while (currentNode != NULL && currentNode->data.gameId != searchId) {
+                    currentNode = currentNode->next;
+                }
+                if (currentNode != NULL) {
+                    Purchase newPurchase;
+                    newPurchase.gameId = currentNode->data.gameId;
+                    strcpy(newPurchase.gameName, currentNode->data.gameName);
+                    newPurchase.price = currentNode->data.price;
+                    enqueuePurchase(&purchaseQueue, newPurchase);
+                    printf("Successfully purchased: %s\n", newPurchase.gameName);
+                }
             } else {
-                printf("Error: Game ID %d not found in the marketplace.\n", id);
+                printf("Error: Game ID %d not found in the marketplace.\n", searchId);
             }
         } else if (choice == 5) {
-            displayQueue(&q);
+            displayQueue(&purchaseQueue);
         }
     } while (choice != 6);
 
     // 4. Save to text files and free memory on exit
     saveGamesToFile(head);
-    saveHistoryToFile(&q);
+    saveHistoryToFile(&purchaseQueue);
     freeGameList(&head);
 
     printf("\nExiting Marketplace. Goodbye!\n");
