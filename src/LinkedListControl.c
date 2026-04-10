@@ -12,6 +12,7 @@ void addGameList(GameNode **head, Game newGame) {
     if (newNode == NULL) {
         return; // Exit if memory allocation failed
     }
+    newNode->data = newGame;
     newNode->next = *head;
     *head = newNode;
 }
