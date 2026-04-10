@@ -61,6 +61,9 @@ void initQueue(PurchaseQueue *queue);
 // Check if queue is empty
 int isQueueEmpty(PurchaseQueue *queue);
 
+// Create a new purchase node
+PurchaseNode* createPurchaseNode(Purchase newPurchase);
+
 // Add element to queue
 void enqueuePurchase(PurchaseQueue *queue, Purchase purchaseData);
 

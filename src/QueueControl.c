@@ -13,9 +13,11 @@ int isQueueEmpty(PurchaseQueue *queue) {
 }
 
 void enqueuePurchase(PurchaseQueue *queue, Purchase purchaseData) {
-    PurchaseNode *newNode = malloc(sizeof(PurchaseNode));
-    newNode->data = purchaseData;
-    newNode->next = NULL;
+    PurchaseNode *newNode = createPurchaseNode(purchaseData);
+    
+    if (newNode == NULL) {
+        return; // Exit if memory allocation failed
+    }
 
     if (queue->rear == NULL) {
         queue->front = newNode;

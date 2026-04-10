@@ -25,13 +25,13 @@ int main(){
     PurchaseQueue purchaseQueue;
     initQueue(&purchaseQueue);
 
-    // 1. Load data from files at startup
+    
     loadGamesFromFile(&head);
     loadHistoryFromFile(&purchaseQueue);
 
     int choice;
     do {
-        // 2. Display the main menu
+        
         printf("\n============================\n");
         printf("   Marketplace Main Menu\n");
         printf("============================\n");
@@ -45,9 +45,9 @@ int main(){
         
         if (scanf("%d", &choice) != 1) {
             int inputChar;
-            while ((inputChar = getchar()) != '\n' && inputChar != EOF); // Clear invalid text input
+            while ((inputChar = getchar()) != '\n' && inputChar != EOF);    
             if (inputChar == EOF) {
-                break; // Exit gracefully if End-Of-File is encountered
+                break; 
             }
             continue;
         }
