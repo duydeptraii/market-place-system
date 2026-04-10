@@ -81,6 +81,9 @@ void displayQueue(PurchaseQueue *queue);
 // Initialize game list
 void initGameList(GameNode **head);
 
+// Create a new game node
+GameNode* createGameNode(Game newGame);
+
 // Add a game to the list
 void addGameList(GameNode **head, Game newGame);
 

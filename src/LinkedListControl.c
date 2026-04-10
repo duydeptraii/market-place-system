@@ -8,8 +8,10 @@ void initGameList(GameNode **head) {
 }
 
 void addGameList(GameNode **head, Game newGame) {
-    GameNode *newNode = malloc(sizeof(GameNode));
-    newNode->data = newGame;
+    GameNode *newNode = createGameNode(newGame);
+    if (newNode == NULL) {
+        return; // Exit if memory allocation failed
+    }
     newNode->next = *head;
     *head = newNode;
 }
