@@ -96,7 +96,7 @@ int peekQueue(PurchaseQueue *q){
 
     PurchaseNode *temp = q->front;
     printf("GameID: %d, Name: %s, Price: %f\n",
-           temp->data.game_Id,
+           temp->data.gameId,
            temp->data.gameName,
            temp->data.price);
     return 1;
@@ -115,7 +115,7 @@ void displayQueue(PurchaseQueue *q){
 
     while(temp != NULL){
         printf("GameID: %d, Name: %s, Price: %f\n",
-               temp->data.game_Id,
+               temp->data.gameId,
                temp->data.gameName,
                temp->data.price);
         temp = temp->next;

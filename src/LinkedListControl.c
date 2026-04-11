@@ -45,7 +45,7 @@ void addGameList(GameNode **head, Game data){
 int deleteGame(GameNode **head, int ID){
     GameNode *temp = *head;
 
-    if (temp != NULL && temp->data.game_Id == ID){
+    if (temp != NULL && temp->data.gameId == ID){
         *head = temp->next;
         free(temp);
         return 1;
@@ -55,7 +55,7 @@ int deleteGame(GameNode **head, int ID){
     temp = temp->next;
 
     while (temp != NULL){
-        if (temp->data.game_Id == ID){
+        if (temp->data.gameId == ID){
             prvtemp->next = temp->next;
             free(temp);
             return 1;
@@ -82,9 +82,9 @@ int searchGame(GameNode *head, int ID){
     GameNode *temp = head;
 
     while (temp != NULL){
-        if (temp->data.game_Id == ID){
+        if (temp->data.gameId == ID){
             printf("GameID: %d, Name: %s, Price: %f\n",
-                   temp->data.game_Id,
+                   temp->data.gameId,
                    temp->data.gameName,
                    temp->data.price);
             return 1;
@@ -109,7 +109,7 @@ void displayGames(GameNode *head) {
 
     while (temp != NULL) {
         printf("GameID: %d, Name: %s, Price: %.2f\n",
-               temp->data.game_Id,
+               temp->data.gameId,
                temp->data.gameName,
                temp->data.price);
         temp = temp->next;
