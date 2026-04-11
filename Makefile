@@ -11,7 +11,7 @@ CFLAGS = -Wall -Iinclude
 TARGET = marketplace
 
 # Source files
-SRC = src/main.c src/logic.c src/file.c
+SRC = src/main.c src/logic.c src/file.c src/LinkedListControl.c src/QueueControl.c
 
 # Default rule
 all:
