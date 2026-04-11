@@ -24,6 +24,10 @@
 #include "../include/file.h"
 #include "../include/logic.h"
 
+/*
+Allocate dynamic memory for a new game node
+Assign the value, data to the node and make it points to NULL
+ */
 GameNode* createGameNode(Game newGame) {
     GameNode* newNode = (GameNode*)malloc(sizeof(GameNode));
 
@@ -38,6 +42,10 @@ GameNode* createGameNode(Game newGame) {
     return newNode;
 }
 
+/*
+Allocate dynamic memory for a new purchase node
+Assign the data to the node and make it points to NULL
+*/
 PurchaseNode* createPurchaseNode(Purchase newPurchase) {
     PurchaseNode* newNode = (PurchaseNode*)malloc(sizeof(PurchaseNode));
 
