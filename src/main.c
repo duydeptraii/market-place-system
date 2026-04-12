@@ -3,13 +3,13 @@
  *
  * Description:
  * This file contains the main function and handles all user interaction.
- * It displays the menu, takes user input, and calls appropriate functions
- * from logic.c and file.c.
+ * It displays the menu, takes user input, and calls functions
+ * from logic.c, LinkedListControl.Control.c and file.c.
  *
  * Responsibilities:
  * - Display menu options
  * - Handle user input
- * - Call functions such as addGame, deleteGame, buyGame, etc.
+ * - Call functions
  * - Coordinate between logic and file modules
  *
  */
@@ -98,7 +98,7 @@ int main(){
         }
     } while (choice != 6);
 
-    // 4. Save to text files and free memory on exit
+    //Save to text files and free memory on exit
     saveGamesToFile(head);
     saveHistoryToFile(&purchaseQueue);
     freeGameList(&head);
